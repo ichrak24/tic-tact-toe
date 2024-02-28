@@ -1,8 +1,11 @@
+
+<div class="container">
 <h1>Jeux Tic-Tac-Toe avec SVG</h1>
 
 <form (submit)="generateGrid(gridSizeInput); $event.preventDefault()">
   <label for="gridSize">Taille de la grille (X) :</label>
-  <input type="number" id="gridSize" name="gridSize" #gridSizeInput required>
+  <input type="number" id="gridSize" name="gridSize" #gridSizeInput required min="0">
+
   <button type="submit">Créer la grille</button>
 </form>
 
@@ -17,4 +20,5 @@
 
 <div class="result">
   <p *ngIf="gameResult">{{ gameResult }}</p>
+</div>
 </div>
