@@ -1,6 +1,4 @@
 
-
-
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -16,6 +14,10 @@ export class AppComponent {
   grid: string[][] = [];
   svgContent: SafeHtml = '';
   gameResult: string | null = null;
+  svgWidth: number = 500;
+  svgHeight: number = 500;
+  cellWidth: number = 100 / this.gridSize;
+  cellHeight: number = 100 / this.gridSize;
 
   @ViewChild('gridSvg') gridSvg: ElementRef | undefined;
 
@@ -116,12 +118,15 @@ export class AppComponent {
     return this.grid.every(row => row.every(cell => cell !== null));
   }
 
-  resetGame() {
+  resetGame(gridSizeInput: HTMLInputElement) {
+    this.gridSize = 3; // Réinitialiser la taille de la grille à sa valeur par défaut
+    gridSizeInput.value = '3'; // Réinitialiser la valeur de l'input à sa valeur par défaut
     this.grid = Array.from({ length: this.gridSize }, () => Array(this.gridSize).fill(null));
     this.currentPlayer = 0;
     this.gameResult = null;
     this.updateSVG();
   }
+  
 }
 
 

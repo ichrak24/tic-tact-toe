@@ -1,4 +1,4 @@
-<div class="container">
+/*<div class="container">
   <h1>Jeux Tic-Tac-Toe</h1>
 
   <form (submit)="generateGrid(gridSizeInput); $event.preventDefault()">
@@ -13,34 +13,36 @@
     <ng-container *ngFor="let row of grid; let i = index">
       <ng-container *ngFor="let cell of row; let j = index">
         <rect
-          *ngIf="cell === null"
-          [attr.x]="j * (100 / gridSize) + '%'"
-          [attr.y]="i * (100 / gridSize) + '%'"
-          [attr.width]="100 / gridSize + '%'"
-          [attr.height]="100 / gridSize + '%'"
-          fill="green"
-          (click)="handleCellClick(i, j)"
-        ></rect>
+        *ngIf="!cell"
+        [attr.x]="j * cellWidth + '%'"
+        [attr.y]="i * cellHeight + '%'"
+        [attr.width]="cellWidth + '%'"
+        [attr.height]="cellHeight + '%'"
+        fill="green"
+        (click)="handleCellClick(i, j)"
+      ></rect>
         <text
-          *ngIf="cell !== null"
-          [attr.x]="j * (100 / gridSize) + 50 / gridSize + '%'"
-          [attr.y]="i * (100 / gridSize) + 50 / gridSize + '%'"
-          font-size="20"
-          fill="black"
-          dominant-baseline="middle"
-          text-anchor="middle"
-        >
+        *ngIf="cell !== null"
+        [attr.x]="j * cellWidth + cellWidth / 2 + '%'"
+        [attr.y]="i * cellHeight + cellHeight / 2 + '%'"
+        font-size="20"
+        fill="black"
+        dominant-baseline="middle"
+        text-anchor="middle"
+      >
           {{ cell }}
         </text>
       </ng-container>
     </ng-container>
   </svg>
 
-  <div class="result">
-    <p *ngIf="gameResult">{{ gameResult }}</p>
-  </div>
-  <div>
-    <button (click)="resetGame()">Réinitialiser</button>
-  </div>
+      <div class="result">
+        <p *ngIf="gameResult">{{ gameResult }}</p>
+      </div>
+      <div>
+        
+        <button (click)="resetGame(gridSizeInput)">Réinitialiser</button>
+      </div>
   
 </div>
+*/
