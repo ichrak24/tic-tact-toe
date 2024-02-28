@@ -61,9 +61,7 @@ export class AppComponent {
           });
         }
       }, 0);
-    } else {
-      alert("La taille de la grille doit être au moins 3.");
-    }
+    } 
   }
 
   
