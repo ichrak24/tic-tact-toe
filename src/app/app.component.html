@@ -10,7 +10,8 @@
   <ng-container *ngFor="let row of grid; let i = index">
     <ng-container *ngFor="let cell of row; let j = index">
       <rect [attr.x]="j * (100 / gridSize) + '%'" [attr.y]="i * (100 / gridSize) + '%'" [attr.width]="100 / gridSize + '%'" [attr.height]="100 / gridSize + '%'" fill="green" (click)="handleCellClick(i, j)"></rect>
-      <text *ngIf="cell" [attr.x]="j * (100 / gridSize) + 10 + '%'" [attr.y]="i * (100 / gridSize) + 50 + '%'" font-size="20" fill="black">{{ cell }}</text>
+      <text *ngIf="cell" [attr.x]="j * (100 / gridSize) + 50 / gridSize + '%'" [attr.y]="i * (100 / gridSize) + 50 / gridSize + '%'" font-size="20" fill="black">{{ cell }}</text>
     </ng-container>
   </ng-container>
 </svg>
+
