@@ -19,7 +19,8 @@ export class AppComponent {
   cellWidth: number = 100 / this.gridSize;
   cellHeight: number = 100 / this.gridSize;
 
-  @ViewChild('gridSvg') gridSvg: ElementRef | undefined;
+  @ViewChild('gridSizeInput') gridSizeInput: ElementRef | undefined; // Accéder à l'élément input
+
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -127,6 +128,10 @@ export class AppComponent {
     this.currentPlayer = 0;
     this.gameResult = null;
     this.updateSVG();
+     // Réinitialiser la valeur de l'input à '3'
+     if (this.gridSizeInput) {
+      this.gridSizeInput.nativeElement.value = '3';
+    }
   }
   
 }
