@@ -2,3 +2,10 @@
     max-width: 200px; /* Ajustez cette valeur selon votre préférence */
     max-height: 200px; /* Ajustez cette valeur selon votre préférence */
   }
+
+  
+  .grid-svg rect {
+    stroke: #ccc; /* Couleur des lignes */
+    stroke-width: 1px; /* Épaisseur des lignes */
+    stroke-linecap: round; /* Forme des coins des lignes */
+  }

@@ -6,12 +6,11 @@
   <button type="submit">Créer la grille</button>
 </form>
 
-<svg id="grid" class="grid-svg" width="2000" height="2000" viewBox="0 0 100 100">
-  <g *ngFor="let row of grid; let i = index">
-    <g *ngFor="let cell of row; let j = index">
+<svg id="grid" class="grid-svg" width="500" height="500" viewBox="0 0 100 100">
+  <ng-container *ngFor="let row of grid; let i = index">
+    <ng-container *ngFor="let cell of row; let j = index">
       <rect [attr.x]="j * (100 / gridSize) + '%'" [attr.y]="i * (100 / gridSize) + '%'" [attr.width]="100 / gridSize + '%'" [attr.height]="100 / gridSize + '%'" fill="green" (click)="handleCellClick(i, j)"></rect>
-    </g>
-  </g>
+      <text *ngIf="cell" [attr.x]="j * (100 / gridSize) + 10 + '%'" [attr.y]="i * (100 / gridSize) + 50 + '%'" font-size="20" fill="black">{{ cell }}</text>
+    </ng-container>
+  </ng-container>
 </svg>
-
-

@@ -27,8 +27,8 @@ export class AppComponent {
       this.grid = new Array(this.gridSize).fill(null).map(() => new Array(this.gridSize).fill(null));
       this.currentPlayer = 0;
   
-      const cellWidth = 100 / this.gridSize;
-      const cellHeight = 100 / this.gridSize;
+      const cellWidth = (100 / this.gridSize) - 5; // Ajuster pour l'épaisseur des lignes
+      const cellHeight = (100 / this.gridSize) - 5;
       let svgString = '';
   
       // Generate rectangles for the grid
@@ -42,7 +42,7 @@ export class AppComponent {
   
       const svgContent = `<svg id="grid" class="grid-svg" width="50%" height="50%" viewBox="0 0 100 100">${svgString}</svg>`;
       this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgContent);
-      
+         
       // Sélectionner les rectangles après avoir créé la grille SVG
       setTimeout(() => {
         if (this.gridSvg) {
@@ -101,24 +101,20 @@ export class AppComponent {
   
       // Mettre à jour le SVG en fournissant une fonction de rappel
       this.updateSVG(() => {
-        // Attendre un court délai pour que le SVG soit mis à jour, puis afficher l'alerte
-        setTimeout(() => {
-          //alert(this.symbols[this.currentPlayer]); // Afficher le symbole du joueur actuel
-        }, 100);
+        const winner = this.checkWinner();
+        if (winner) {
+          alert(`Le joueur ${this.currentPlayer + 1} a gagné !`); // Afficher le numéro du joueur actuel
+        } else if (this.isDraw()) {
+          alert("Match nul !");
+        } else {
+          this.currentPlayer = 1 - this.currentPlayer; // Alterner entre les joueurs (0 devient 1, 1 devient 0)
+        }
       });
-  
-      const winner = this.checkWinner();
-      if (winner) {
-        alert(`Le joueur ${this.currentPlayer + 1} a gagné !`); // Afficher le numéro du joueur actuel
-      } else if (this.isDraw()) {
-        alert("Match nul !");
-      } else {
-        this.currentPlayer = 1 - this.currentPlayer; // Alterner entre les joueurs (0 devient 1, 1 devient 0)
-      }
     }
   }
   
   
+  
 
 
 
@@ -126,37 +122,44 @@ export class AppComponent {
 
 
 
-updateSVG(callback: () => void) {
-  let svgString = '';
 
-  // Draw X or O based on the grid values
-  for (let i = 0; i < this.gridSize; i++) {
-    for (let j = 0; j < this.gridSize; j++) {
-      const symbol = this.grid[i][j];
-      if (symbol) {
-        const cellWidth = 100 / this.gridSize;
-        const cellHeight = 100 / this.gridSize;
-        const xOffset = (j * cellWidth) + (cellWidth / 2); // Centre horizontal de la case
-        const yOffset = (i * cellHeight) + (cellHeight / 2); // Centre vertical de la case
 
-        if (symbol === 'X') {
-          const lineLength = Math.min(cellWidth, cellHeight) * 0.8; // Longueur de la ligne pour X
-          svgString += `<line x1="0" y1="0" x2="${100}%" y2="${100}%" stroke="black" stroke-width="5" stroke-linecap="round"/>`;
-svgString += `<line x1="${100}%" y1="0" x2="0" y2="${100}%" stroke="black" stroke-width="5" stroke-linecap="round"/>`;
-        } else {
-          const radius = Math.min(cellWidth, cellHeight) * 0.4; // Rayon du cercle pour O
-          svgString += `<circle cx="${xOffset}" cy="${yOffset}" r="${radius}" stroke="blue" fill="transparent" stroke-width="5"/>`;
+  updateSVG(callback: () => void) {
+    let svgString = '';
+  
+    // Draw X or O based on the grid values
+    for (let i = 0; i < this.gridSize; i++) {
+      for (let j = 0; j < this.gridSize; j++) {
+        const symbol = this.grid[i][j];
+        if (symbol) {
+          const cellWidth = 100 / this.gridSize;
+          const cellHeight = 100 / this.gridSize;
+          const xOffset = j * cellWidth + cellWidth / 2;
+          const yOffset = i * cellHeight + cellHeight / 2;
+  
+          if (symbol === 'X') {
+            const lineLength = Math.min(cellWidth, cellHeight) * 0.8;
+            svgString += `<line x1="${xOffset - lineLength / 2}%" y1="${yOffset - lineLength / 2}%" x2="${xOffset + lineLength / 2}%" y2="${yOffset + lineLength / 2}%" stroke="red" stroke-width="5" stroke-linecap="round"/>`;
+            svgString += `<line x1="${xOffset - lineLength / 2}%" y1="${yOffset + lineLength / 2}%" x2="${xOffset + lineLength / 2}%" y2="${yOffset - lineLength / 2}%" stroke="red" stroke-width="5" stroke-linecap="round"/>`;
+          } else {
+            const radius = Math.min(cellWidth, cellHeight) * 0.4;
+            svgString += `<circle cx="${xOffset}%" cy="${yOffset}%" r="${radius}%" stroke="blue" fill="transparent" stroke-width="5"/>`;
+          }
         }
       }
     }
+  
+    const svgContent = `<svg id="grid" width="100%" height="100%" viewBox="0 0 100 100">${svgString}</svg>`;
+    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgContent);
+    callback(); // Appel de la fonction de rappel
   }
-
-  const svgContent = `<svg id="grid" width="100%" height="100%" viewBox="0 0 100 100">${svgString}</svg>`;
-  this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgContent);
-  console.log('Contenu SVG :', svgContent);
-  callback(); // Appel de la fonction de rappel
-}
-
+  
+  
+  
+  
+  
+  
+  
 
 
 
