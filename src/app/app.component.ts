@@ -227,31 +227,33 @@ handleCellClick(row: number, col: number) {
 
 
 
-  updateSVG(callback: () => void) {
-    let svgString = '';
-  
-    // Draw X or O based on the grid values
-    for (let i = 0; i < this.gridSize; i++) {
-      for (let j = 0; j < this.gridSize; j++) {
-        const cellWidth = 100 / this.gridSize;
-        const cellHeight = 100 / this.gridSize;
-        const xOffset = j * cellWidth + cellWidth / 2;
-        const yOffset = i * cellHeight + cellHeight / 2;
-        const symbol = this.grid[i][j];
-  
-        // Dessiner le symbole dans la case s'il existe
-        if (symbol) {
-          svgString += `<text x="${xOffset}%" y="${yOffset}%" dominant-baseline="middle" text-anchor="middle" font-size="20" fill="black">${symbol}</text>`;
-        }
+updateSVG(callback: () => void) {
+  let svgString = '';
+
+  // Draw X or O based on the grid values
+  for (let i = 0; i < this.gridSize; i++) {
+    for (let j = 0; j < this.gridSize; j++) {
+      const cellWidth = 100 / this.gridSize;
+      const cellHeight = 100 / this.gridSize;
+      const xOffset = j * cellWidth + cellWidth / 2;
+      const yOffset = i * cellHeight + cellHeight / 2;
+      const symbol = this.grid[i][j];
+
+      // Dessiner le symbole dans la case s'il existe
+      if (symbol) {
+        svgString += `<text x="${xOffset}%" y="${yOffset}%" dominant-baseline="middle" text-anchor="middle" font-size="5" fill="black">${symbol}</text>`; // Changer la taille de la police à 15
       }
     }
-  
-    // Générer le contenu SVG avec le texte ajouté
-    const svgContent = `<svg id="grid" width="100%" height="100%" viewBox="0 0 100 100">${svgString}</svg>`;
-    this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgContent);
-  
-    callback(); // Appel de la fonction de rappel
   }
+
+  // Générer le contenu SVG avec le texte ajouté
+  const svgContent = `<svg id="grid" width="100%" height="100%" viewBox="0 0 100 100">${svgString}</svg>`;
+  this.svgContent = this.sanitizer.bypassSecurityTrustHtml(svgContent);
+
+  callback(); // Appel de la fonction de rappel
+}
+
+
   
   
   
