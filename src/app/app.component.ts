@@ -23,15 +23,18 @@ export class AppComponent {
 
   constructor(private sanitizer: DomSanitizer) {}
 
-  generateGrid(gridSizeInput: HTMLInputElement) {
-    const size = parseInt(gridSizeInput.value);
-    if (size >= 3) {
-      this.gridSize = size;
-      this.grid = Array.from({ length: this.gridSize }, () => Array(this.gridSize).fill(null));
-      this.currentPlayer = 0;
-      this.updateSVG();
-    } 
-  }
+    generateGrid(gridSizeInput: HTMLInputElement) {
+      const size = parseInt(gridSizeInput.value);
+      if (size >= 3) {
+        this.gridSize = size;
+        this.grid = Array.from({ length: this.gridSize }, () => Array(this.gridSize).fill(null));
+        this.currentPlayer = 0;
+        this.updateSVG();
+        this.cellWidth = 100 / this.gridSize; 
+        this.cellHeight = 100 / this.gridSize; 
+      } 
+    }
+    
 
   handleCellClick(row: number, col: number) {
     if (this.grid[row][col] === null && !this.gameResult) {
@@ -118,9 +121,8 @@ export class AppComponent {
     return this.grid.every(row => row.every(cell => cell !== null));
   }
 
-  resetGame(gridSizeInput: HTMLInputElement) {
-    this.gridSize = 3; // Réinitialiser la taille de la grille à sa valeur par défaut
-    gridSizeInput.value = '3'; // Réinitialiser la valeur de l'input à sa valeur par défaut
+  resetGame() {
+    this.gridSize = 3; // Réinitialiser la taille de la grille à 3
     this.grid = Array.from({ length: this.gridSize }, () => Array(this.gridSize).fill(null));
     this.currentPlayer = 0;
     this.gameResult = null;
