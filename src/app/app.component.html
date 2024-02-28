@@ -1,4 +1,4 @@
-<h1>Jeu Tic-Tac-Toe avec SVG</h1>
+<h1>Jeux Tic-Tac-Toe avec SVG</h1>
 
 <form (submit)="generateGrid(gridSizeInput); $event.preventDefault()">
   <label for="gridSize">Taille de la grille (X) :</label>
@@ -15,3 +15,6 @@
   </ng-container>
 </svg>
 
+<div class="result">
+  <p *ngIf="gameResult">{{ gameResult }}</p>
+</div>

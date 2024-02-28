@@ -13,6 +13,7 @@ export class AppComponent {
   grid: string[][] = [];
   svgContent: SafeHtml = '';
   turn: number = 0;
+  gameResult: string | null = null;
 
   @ViewChild('gridSvg') gridSvg: ElementRef | undefined;
 
@@ -108,26 +109,30 @@ export class AppComponent {
       if (winner) {
         // Remise de la fonction après l'affichage du résultat
         setTimeout(() => {
-          // Vérifier si les trois symboles successifs sont alignés avant d'afficher l'alerte
           if (this.grid.flat().filter(symbol => symbol === winner).length >= 3) {
             // Afficher le message approprié en fonction du gagnant
-            if (winner === "X") {
-              alert(`Le joueur X a gagné !`);
-            } else {
-              alert(`Le joueur O a gagné !`);
-            }
-            // Réinitialiser le jeu après l'affichage de l'alerte
+            this.gameResult = winner === "X" ? 'Le joueur X a gagné !' : 'Le joueur O a gagné !';
             this.resetGame();
           }
         }, 0);
       } else if (this.isDraw()) {
-        // Si le jeu est un match nul, afficher l'alerte, puis réinitialiser le jeu
-        alert("Match nul !");
-        // Réinitialiser le jeu après l'affichage de l'alerte
+        this.gameResult = "Match nul !";
         this.resetGame();
+      } else {
+        // Si toutes les cases sont remplies et qu'aucun gagnant n'a été trouvé
+        // Effacer le résultat précédent s'il y en a un
+        this.gameResult = null;
       }
     }
+  
+    // Vérifier si toutes les cases sont remplies et afficher le résultat si c'est le cas
+    if (this.isDraw()) {
+      // Afficher le message approprié pour un match nul
+      this.gameResult = "Match nul !";
+      this.resetGame();
+    }
   }
+  
   
   
   
